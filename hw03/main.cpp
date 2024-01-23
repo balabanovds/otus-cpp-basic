@@ -1,4 +1,5 @@
 #include "flag.h"
+#include "level.h"
 #include "rand.h"
 #include "repo.h"
 
@@ -16,7 +17,15 @@ int main(int argc, char *argv[]) {
     return print_result(filename);
   }
 
-  int max = flag_int(argc, argv, "-max", 100);
+  int max;
+  int level = flag_int(argc, argv, "-level", 0);
+
+  if (level) {
+    max = max_by_level(level);
+  } else {
+    max = flag_int(argc, argv, "-max", 100);
+  }
+
   int want = generate_random_number(max);
 
   std::cout << "Please enter your name: " << std::endl;

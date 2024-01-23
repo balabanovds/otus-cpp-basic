@@ -9,6 +9,8 @@ add_executable(guessing_game
     rand.cpp
     repo.h
     repo.cpp
+    level.h
+    level.cpp
     main.cpp
 )
 
