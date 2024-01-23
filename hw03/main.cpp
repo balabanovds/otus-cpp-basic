@@ -28,10 +28,10 @@ int main(int argc, char *argv[]) {
 
   int want = generate_random_number(max);
 
-  std::cout << "Please enter your name: " << std::endl;
+  std::cout << "Hey! Let's start game. Pls enter your name: " << std::endl;
   std::string name;
   std::cin >> name;
-  std::cout << "Nice to met u user " << name
+  std::cout << "Nice to met ya, " << name
             << "! Try to guess number between 0 and " << max << std::endl;
 
   std::string answer;
@@ -53,7 +53,7 @@ int main(int argc, char *argv[]) {
     std ::cout << "less than " << got << std::endl;
   }
 
-  std::cout << "Congrats " << name << "! You'we guessed for " << tries
+  std::cout << "Congrats, " << name << "! You'we guessed for " << tries
             << " tries." << std::endl;
 
   std::ofstream of;
