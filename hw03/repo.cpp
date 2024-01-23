@@ -1,6 +1,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <unordered_map>
 
 bool store_result(std::ofstream &file, const std::string user,
                   const int value) {
@@ -19,13 +20,20 @@ bool print_result_table(std::ifstream &file) {
     return false;
   }
 
-  std::cout << "USER" << '\t' << "RESULT" << std::endl;
+  std::cout << "USER" << '\t' << "TRIES" << std::endl;
 
-  int line_num = 1;
+  std::unordered_map<std::string, int> m;
   std::string name;
   int tries;
   while (file >> name >> tries) {
-    std::cout << name << '\t' << tries << std::endl;
+    if (m.count(name) && m[name] < tries) {
+      continue;
+    }
+    m[name] = tries;
+  }
+
+  for (auto i = m.begin(); i != m.end(); ++i) {
+    std::cout << i->first << '\t' << i->second << std::endl;
   }
 
   return true;

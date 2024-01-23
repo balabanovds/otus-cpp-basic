@@ -59,7 +59,7 @@ int main(int argc, char *argv[]) {
   std::ofstream of;
   of.open(filename, std::ios_base::app);
 
-  if (store_result(of, name, tries)) {
+  if (!store_result(of, name, tries)) {
     return -1;
   }
 
