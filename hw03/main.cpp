@@ -89,12 +89,11 @@ int store_result(const std::string filename, std::string name, int tries) {
   best[name] = tries;
 
   std::ofstream ofd;
-  ofd.open(filename, std::ios_base::app);
+  ofd.open(filename, std::ios_base::trunc);
+
   if (recreate_results(ofd, best)) {
-    ofd.close();
     return 0;
   }
 
-  ofd.close();
   return -1;
 }
