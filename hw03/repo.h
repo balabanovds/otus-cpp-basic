@@ -12,4 +12,4 @@ std::unordered_map<std::string, int> get_best(std::ifstream &file);
 
 // rewrite db data.
 bool recreate_results(std::ofstream &file,
-                      std::unordered_map<std::string, int> data);
+                      std::unordered_map<std::string, int> &data);

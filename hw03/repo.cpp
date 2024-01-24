@@ -1,5 +1,4 @@
 #include <fstream>
-#include <ios>
 #include <iostream>
 #include <string>
 #include <unordered_map>
@@ -17,14 +16,14 @@ bool store_one(std::ofstream &file, const std::string user, const int value) {
 }
 
 bool recreate_results(std::ofstream &file,
-                      std::unordered_map<std::string, int> data) {
+                      std::unordered_map<std::string, int> &data) {
   if (!file.is_open()) {
     std::cerr << "Can not store result as file is not opened" << std::endl;
     return false;
   }
 
   for (auto i = data.begin(); i != data.end(); ++i) {
-    std::cout << i->first << '\t' << i->second << std::endl;
+    file << i->first << '\t' << i->second << std::endl;
   }
   return true;
 }
