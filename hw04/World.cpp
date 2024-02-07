@@ -24,9 +24,6 @@ World::World(const std::string &worldFilePath) {
   double radius;
 
   Color color;
-  double red;
-  double green;
-  double blue;
 
   bool isCollidable;
 
@@ -48,8 +45,7 @@ World::World(const std::string &worldFilePath) {
     // В базовой части задания этот параметр
     stream >> std::boolalpha >> isCollidable;
 
-    Ball ball(Velocity(vector), center, radius, Color(red, green, blue),
-              isCollidable);
+    Ball ball(Velocity(vector), center, radius, color, isCollidable);
     balls.push_back(ball);
   }
 }
