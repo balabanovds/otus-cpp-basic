@@ -16,6 +16,7 @@ public:
     this->color = color;
     this->isCollidable = isCollidable;
 
+    // We calculate mass ones as radius is also constant.
     this->mass = M_PI * std::pow(this->radius, 3) * 4. / 3.;
   }
   void setVelocity(const Velocity &velocity);
