@@ -9,6 +9,7 @@
 #include <string>
 
 int print_result(const std::string filename);
+int store_result(const std::string filename, std::string name, int tries);
 
 int main(int argc, char *argv[]) {
   const std::string filename = "result.db";
@@ -56,24 +57,43 @@ int main(int argc, char *argv[]) {
   std::cout << "Congrats, " << name << "! You'we guessed for " << tries
             << " tries." << std::endl;
 
-  std::ofstream of;
-  of.open(filename, std::ios_base::app);
-
-  if (!store_result(of, name, tries)) {
+  if (!store_result(filename, name, tries)) {
     return -1;
   }
-
-  std::cout << "Here is a result table" << std::endl;
 
   return print_result(filename);
 }
 
 int print_result(const std::string filename) {
+  std::cout << "Here is a result table" << std::endl;
   std::ifstream file(filename);
 
   if (print_result_table(file)) {
+    file.close();
     return 0;
   }
 
+  file.close();
   return -1;
+}
+
+int store_result(const std::string filename, std::string name, int tries) {
+  std::ifstream ifd(filename);
+  auto best = get_best(ifd);
+  ifd.close();
+
+  if (best.count(name) && best[name] < tries) {
+    return 0;
+  }
+
+  best[name] = tries;
+
+  std::ofstream ofd;
+  ofd.open(filename, std::ios_base::trunc);
+
+  if (!recreate_results(ofd, best)) {
+    return 0;
+  }
+
+  return 1;
 }

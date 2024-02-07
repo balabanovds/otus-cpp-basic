@@ -3,14 +3,28 @@
 #include <string>
 #include <unordered_map>
 
-bool store_result(std::ofstream &file, const std::string user,
-                  const int value) {
+std::unordered_map<std::string, int> get_best(std::ifstream &file);
+
+bool store_one(std::ofstream &file, const std::string user, const int value) {
   if (!file.is_open()) {
     std::cerr << "Can not store result as file is not opened" << std::endl;
     return false;
   }
 
   file << user << ' ' << value << std::endl;
+  return true;
+}
+
+bool recreate_results(std::ofstream &file,
+                      std::unordered_map<std::string, int> &data) {
+  if (!file.is_open()) {
+    std::cerr << "Can not store result as file is not opened" << std::endl;
+    return false;
+  }
+
+  for (auto i = data.begin(); i != data.end(); ++i) {
+    file << i->first << '\t' << i->second << std::endl;
+  }
   return true;
 }
 
@@ -22,6 +36,16 @@ bool print_result_table(std::ifstream &file) {
 
   std::cout << "USER" << '\t' << "TRIES" << std::endl;
 
+  auto m = get_best(file);
+
+  for (auto i = m.begin(); i != m.end(); ++i) {
+    std::cout << i->first << '\t' << i->second << std::endl;
+  }
+
+  return true;
+}
+
+std::unordered_map<std::string, int> get_best(std::ifstream &file) {
   std::unordered_map<std::string, int> m;
   std::string name;
   int tries;
@@ -32,9 +56,5 @@ bool print_result_table(std::ifstream &file) {
     m[name] = tries;
   }
 
-  for (auto i = m.begin(); i != m.end(); ++i) {
-    std::cout << i->first << '\t' << i->second << std::endl;
-  }
-
-  return true;
+  return m;
 }
