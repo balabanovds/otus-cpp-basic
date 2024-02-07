@@ -49,3 +49,5 @@ double Ball::getRadius() const { return this->radius; }
  * эквивалентна объему: PI * radius^3 * 4. / 3.
  */
 double Ball::getMass() const { return this->mass; }
+
+bool Ball::getIsCollidable() const { return this->isCollidable; }
