@@ -8,7 +8,7 @@
 
 class Ball {
 public:
-  Ball(const Velocity &velocity, const Point &center, const double &radius,
+  Ball(const Velocity &velocity, const Point &center, const double radius,
        const Color &color, const bool isCollidable) {
     this->velocity = velocity;
     this->center = center;
