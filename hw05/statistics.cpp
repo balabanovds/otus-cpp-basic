@@ -110,10 +110,12 @@ public:
     _name = buf.c_str();
   }
 
-  void update(double next) override { _values.push_back(next); }
+  void update(double next) override {
+    _values.push_back(next);
+    std::sort(_values.begin(), _values.end());
+  }
 
   double eval() const override {
-    std::sort(_values.begin(), _values.end());
     size_t perc_pos = _values.size() * N / 100;
     return _values.at(perc_pos);
   }
