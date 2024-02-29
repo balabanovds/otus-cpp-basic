@@ -35,7 +35,7 @@ private:
 
 class Max : public IStatistics {
 public:
-  Max() : m_max{std::numeric_limits<double>::min()} {}
+  Max() : m_max{-std::numeric_limits<double>::max()} {}
 
   void update(double next) override {
     if (next > m_max) {
@@ -98,16 +98,16 @@ private:
   }
 };
 
-template <size_t N> class Perc : public IStatistics {
+class Perc : public IStatistics {
 public:
-  Perc() {
+  Perc(size_t N) {
     if (N < 1 || N > 100) {
       throw std::invalid_argument(
           "percentile N must be a value between 1 and 100");
     }
-    std::string buf("pct");
-    buf.append(std::to_string(N));
-    _name = buf.c_str();
+    _n = N;
+    _name = "pct";
+    _name.append(std::to_string(N));
   }
 
   void update(double next) override {
@@ -116,15 +116,16 @@ public:
   }
 
   double eval() const override {
-    size_t perc_pos = _values.size() * N / 100;
+    size_t perc_pos = _values.size() * _n / 100;
     return _values.at(perc_pos);
   }
 
-  const char *name() const override { return _name; }
+  const char *name() const override { return _name.c_str(); }
 
 private:
   std::vector<double> _values;
-  const char *_name;
+  std::string _name;
+  size_t _n;
 };
 
 int main() {
@@ -135,8 +136,8 @@ int main() {
   statistics[1] = new Max{};
   statistics[2] = new Mean{};
   statistics[3] = new Std{};
-  statistics[4] = new Perc<91>{};
-  statistics[5] = new Perc<95>{};
+  statistics[4] = new Perc(91);
+  statistics[5] = new Perc(95);
 
   double val = 0;
   while (std::cin >> val) {
